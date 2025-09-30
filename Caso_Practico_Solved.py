@@ -75,14 +75,57 @@ def turno(jugador, tablero):
 
     ## -- Meter la función que calcule si ya gano alguien y guardarlo en winner
 
-    ## -- Agregar un if winner = True, break
+    ## -- Agregar un if winner: break
 
     #Cambiar de jugador automaticamente para el proximo turno
     if jugador == 1: jugador = 0
     else: jugador = 1
+
     return tablero, jugador
+
+def columnas_calculador(tablero):
+    columna_contador_x = [0, 0, 0, 0, 0, 0, 0]
+    columna_contador_0 = [0, 0, 0, 0, 0, 0, 0]
+    i = 6
+    j = 0
+    #Recorrido de las filas de la matríz
+    for fila in tablero[:0:-1]:
+        print(fila)
+        #Recorrido por los elementos de la fila para añadir al contador
+        for columna in fila[:][:]:
+            #Condiciones para reiniciar contador cuando ya no hay igualdad de columnas por fila
+            if i == 6: pass
+            else:
+                if columna_anterior != columna:
+                    print("CAMBIO!")
+                    if columna_anterior == "x":
+                        print("EN X")
+                        columna_contador_x[j] = 0
+                    elif columna_anterior == "0":
+                        print("EN 0")
+                        columna_contador_0[j] = 0
+
+            #Aumentar contador
+            if columna == "x":
+                columna_contador_x[j] +=1
+            elif columna == "0":
+                columna_contador_0[j] +=1
+            j+=1
+            columna_anterior = columna
+
+        j= 0
+        i-=1
+        print(columna_contador_x, columna_contador_0)
+        if 4 in columna_contador_x or columna_contador_0:
+            print("Ganaste")
+
+    return
 
 jugador=1
 for i in range(20):
+    break
     movimiento, jugador= turno(jugador, tablero)
     print("Siguiente Jugador")
+
+tablero = [("0", "1", "2", "3", "4", "5", "6"),[".", ".", ".", ".", ".", ".", "x",], [".", ".", ".", ".", ".", ".", "x",], [".", "0", "0", "0", "0", "x", "x",], [".", "x", "0", "x", "0", "x", "x",] ]
+columnas_calculador(tablero)
