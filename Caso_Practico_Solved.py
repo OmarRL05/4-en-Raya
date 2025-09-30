@@ -116,9 +116,16 @@ def columnas_calculador(tablero):
         j= 0
         i-=1
         print(columna_contador_x, columna_contador_0)
-        if 4 in columna_contador_x or columna_contador_0:
-            print("Ganaste")
 
+        #Reconocer y Guardar al ganador del juego
+        if 4 in columna_contador_x or columna_contador_0:
+            if 4 in columna_contador_x:
+                print("El ganador es el Jugador 1")
+                winner = "El ganador es el Jugador 1"
+            elif 4 in columna_contador_0:
+                print("El Ganador es el Jugador 2")
+                winner = "El ganador es el Jugador 2"
+            else: continue
     return
 
 jugador=1
