@@ -1,7 +1,8 @@
 tablero_header = [("0", "1", "2", "3", "4", "5", "6")]
 jugador=1
 finalizar=0
-
+FILAS = 7
+COLUMNAS = 7
 
 def table_starter(tablero_header):
     tablero = tablero_header
@@ -46,14 +47,15 @@ def columnas_calculador(tablero):
         i-=1
     #Reconocer y Guardar al ganador del juego
     if 4 in columna_contador_x or columna_contador_0:
+        metodo = "VICTORIA POR COLUMNAS"
         if 4 in columna_contador_x:
             fin = 1
             ganador = "El ganador es el Jugador 1"
-            print(ganador)
+            print("\n"*50,f'{metodo}\n{ganador}')
         elif 4 in columna_contador_0:
             fin = 1
             ganador = "El ganador es el Jugador 2"
-            print(ganador)
+            print("\n"*50,f'{metodo}\n{ganador}')
     else:
         fin = 0
     return fin
@@ -139,17 +141,44 @@ def filas_calculador(tablero):
         i-=1
         # Reconocer y Guardar al ganador del juego
     if 4 in filas_contador_x or filas_contador_0:
+        metodo = "VICTORIA POR FILAS"
         if 4 in filas_contador_x:
             fin = 1
             ganador = "El ganador es el Jugador 1"
-            print(ganador)
+            print("\n"*50,f'{metodo}\n{ganador}')
         elif 4 in filas_contador_0:
             fin = 1
             ganador = "El ganador es el Jugador 2"
-            print(ganador)
+            print("\n"*50,f'{metodo}\n{ganador}')
     else:
         fin = 0
     return fin
+
+def diagonal_izq_calculador(tablero):
+    for r in range(FILAS - 3):
+        if r == 0: continue
+        for c in range (COLUMNAS - 3):
+            valor = tablero[r][c]
+            if valor != ".":
+                if (valor == tablero[r+1][c+1] and valor == tablero[r+2][c+2] and valor == tablero[r+3][c+3]):
+                    print("\n"*50,"VICTORIA POR DIAGONAL IZQUIERDA")
+                    if valor == "x": print("El Ganador es el Jugador 1")
+                    else: print("El Ganador es el Jugador 2")
+                    return 1
+    return 0
+
+def diagonal_der_calculador(tablero):
+    for r in range(FILAS - 3):
+        if r == 0: continue
+        for c in range (3, COLUMNAS):
+            valor = tablero[r][c]
+            if valor != ".":
+                if (valor == tablero[r+1][c-1] and valor == tablero[r+2][c-2] and valor == tablero[r+3][c-3]):
+                    print("\n"*50, "VICTORIA POR DIAGONAL DERECHA")
+                    if valor == "x": print("El Ganador es el Jugador 1")
+                    else: print("El Ganador es el Jugador 2")
+                    return 1
+    return 0
 
 
 def turno(jugador, tablero, ):
@@ -209,25 +238,21 @@ def turno(jugador, tablero, ):
     return tablero, jugador
 
 #Simulación del juego
-for i in range(20):
-
-    if finalizar == 1:
-        print("\n" * 25)
-        print("FIN DEL JUEGO")
-        columnas_calculador(movimiento)
-        filas_calculador(movimiento)
-        mostrar_tablero(movimiento)
-        break
-    print("\n"*25)
+for ciclo in range(41):
+    print("\n"*30)
     print("Siguiente Jugador: ")
     movimiento, jugador= turno(jugador, tablero)
 
-
+    finalizar_por_izq = diagonal_izq_calculador(movimiento)
+    finalizar_por_dr = diagonal_der_calculador(movimiento)
     finalizar_por_fila = filas_calculador(movimiento)
     finalizar_por_col = columnas_calculador(movimiento)
-    if (finalizar_por_fila or finalizar_por_col) == 1:
-        if finalizar_por_fila == 1: finalizar = finalizar_por_fila
-        elif finalizar_por_col == 1: finalizar = finalizar_por_col
-
+    if (finalizar_por_fila or finalizar_por_col or finalizar_por_izq or finalizar_por_dr) == 1:
+        print("===================================\n")
+        print("FIN DEL JUEGO")
+        mostrar_tablero(movimiento)
+        break
+else:
+    print("EMPATE")
 
 
