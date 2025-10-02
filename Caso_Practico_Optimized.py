@@ -37,4 +37,24 @@ def jugada_tablero(tablero, columna, ficha):
 #Pruebas de función
 print("\n"*2)
 tablero = jugada_tablero(tablero, 3, "X")
+tablero = jugada_tablero(tablero, 2, "X")
+tablero = jugada_tablero(tablero, 1, "X")
+tablero = jugada_tablero(tablero, 0, "X")
 mostrar_tablero(tablero)
+
+def calculo_horizontal(tablero, ficha):
+    n_filas = len(tablero)
+    n_columnas = len(tablero[0])
+    for r in range(n_filas):
+        for c in range(n_columnas-3):
+            if tablero[r][c] == ficha and tablero[r][c+1] == ficha and tablero[r][c+2] == ficha and tablero[r][c+3] == ficha:
+                return True
+
+def calculo_vertical(tablero, ficha):
+    n_filas = len(tablero)
+    n_columnas = len(tablero[0])
+    for c in range(n_columnas):
+        for r in range(n_filas-3):
+            if tablero[r][c] == ficha and tablero[r+1][c] == ficha and tablero[r+2][c] == ficha and tablero[r+3][c] == ficha:
+                print("11111")
+                return True
