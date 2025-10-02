@@ -15,4 +15,26 @@ def mostrar_tablero(tablero):
     for fila in tablero:
         print("")
         for objeto in fila:
-            print(objeto, "|", end=' ')
+            print(objeto, end='  ')
+
+#Pruebas de función
+tablero = crear_tablero(7, 6)
+mostrar_tablero(tablero)
+
+def jugada_tablero(tablero, columna, ficha):
+    if columna >= len(tablero[0]) or columna < 0:
+        print("Error: La columna exede los parametros definidos.")
+        return
+    elif tablero[0][columna] != '.':
+        print("Error: La columna esta llena.")
+        return
+    else:
+        for fila in range(len(tablero)-1, -1, -1):
+            if tablero[fila][columna] == '.':
+                tablero[fila][columna] = ficha
+                return tablero
+
+#Pruebas de función
+print("\n"*2)
+tablero = jugada_tablero(tablero, 3, "X")
+mostrar_tablero(tablero)
