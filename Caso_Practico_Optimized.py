@@ -56,5 +56,19 @@ def calculo_vertical(tablero, ficha):
     for c in range(n_columnas):
         for r in range(n_filas-3):
             if tablero[r][c] == ficha and tablero[r+1][c] == ficha and tablero[r+2][c] == ficha and tablero[r+3][c] == ficha:
-                print("11111")
+                return True
+
+def calculo_diagonales(tablero, ficha):
+    n_filas = len(tablero)
+    n_columnas = len(tablero[0])
+    #Derecha <--
+    for c in range(n_columnas-3):
+        for r in range(n_filas-1, 2, -1):
+            if tablero[r][c] == ficha and tablero[r-1][c+1] == ficha and tablero[r-2][c+2] == ficha and tablero[r-3][c+3] == ficha:
+                return True
+
+    #Izquierda -->
+    for c in range(n_columnas-1, 2, -1):
+        for r in range(n_filas-1, 2, -1):
+            if tablero[r][c] == ficha and tablero[r-1][c-1] == ficha and tablero[r-2][c-2] == ficha and tablero[r-3][c-3] == ficha:
                 return True
