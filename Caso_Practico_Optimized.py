@@ -17,10 +17,6 @@ def mostrar_tablero(tablero):
         for objeto in fila:
             print(objeto, end='  ')
 
-#Pruebas de función
-tablero = crear_tablero(7, 6)
-mostrar_tablero(tablero)
-
 def jugada_tablero(tablero, columna, ficha):
     if columna >= len(tablero[0]) or columna < 0:
         print("Error: La columna exede los parametros definidos.")
@@ -33,14 +29,6 @@ def jugada_tablero(tablero, columna, ficha):
             if tablero[fila][columna] == '.':
                 tablero[fila][columna] = ficha
                 return tablero
-
-#Pruebas de función
-print("\n"*2)
-tablero = jugada_tablero(tablero, 3, "X")
-tablero = jugada_tablero(tablero, 2, "X")
-tablero = jugada_tablero(tablero, 1, "X")
-tablero = jugada_tablero(tablero, 0, "X")
-mostrar_tablero(tablero)
 
 def calculo_horizontal(tablero, ficha):
     n_filas = len(tablero)
@@ -72,3 +60,29 @@ def calculo_diagonales(tablero, ficha):
         for r in range(n_filas-1, 2, -1):
             if tablero[r][c] == ficha and tablero[r-1][c-1] == ficha and tablero[r-2][c-2] == ficha and tablero[r-3][c-3] == ficha:
                 return True
+
+def detector_ganador(tablero, ficha):
+    return calculo_vertical(tablero, ficha) or calculo_horizontal(tablero, ficha) or calculo_diagonales(tablero, ficha)
+
+tablero = crear_tablero(8, 10)
+turno = "O"
+sig_turno = "X"
+
+while True:
+    print("\n"*50)
+    turno = sig_turno
+    mostrar_tablero(tablero)
+    print("")
+    if turno == "X":
+        columna = int(input("Ingese en que columna caerá su ficha (X): "))
+        sig_turno = "O"
+    elif turno == "O":
+        columna = int(input("Ingese en que columna caerá su ficha (O): "))
+        sig_turno = "X"
+    tablero = jugada_tablero(tablero, columna, turno)
+    if detector_ganador(tablero, turno):
+        print("\n"*50)
+        print("Has ganado jugador: ", "1" if turno == "X" else "2")
+        mostrar_tablero(tablero)
+        break
+
